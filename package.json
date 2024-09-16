@@ -11,6 +11,7 @@
   "dependencies": {
     "@clerk/clerk-expo": "^2.2.10",
     "@expo/metro-runtime": "~3.2.3",
+    "@supabase/supabase-js": "^2.45.4",
     "cartradeconnect_mobile_app": "file:",
     "expo": "^51.0.0",
     "expo-av": "~14.0.7",

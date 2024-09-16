@@ -5,7 +5,9 @@ import { Image } from 'expo-image';
 import { Video, ResizeMode } from 'expo-av';
 import Colors from '../../Screens/Utils/Colors';
 import { useWarmpUpBrowser } from '../../hooks/useWarmUpBrowser';
+import { useOAuth } from '@clerk/clerk-expo';
 import { ClerkProvider , SignedIn, SignedOut ,useOAuth } from '@clerk/clerk-expo';
+import {supabase} from './../../Utils/SupabaseConfig'
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -21,6 +23,24 @@ export default function LoginScreen() {
                 await startOAuthFlow();
 
                 if (createdSessionId) {
+
+                    if(signUp?.emailAddress)
+                        {
+                                                    
+                            const { data, error } = await supabase
+                            .from('Users')
+                            .insert([
+                            { name: signUp?.firstName, 
+                                email: signUp?.emailAddress },
+                            ])
+                            .select()
+                                        if(data)
+                                        {
+                                            console.log(data);
+                                        }
+                        }
+                 
+
                     setActive({ session: createdSessionId});
                 } else {
                     // use signUp or signIn for nexr steps such as MFA
