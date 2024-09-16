@@ -12,7 +12,7 @@ export default function App() {
         'outfit-bold': require('./assets/fonts/Outfit-Bold.ttf'),
     });
 
-    console.log("App Component Rendered"); // Ajout d'un log pour le rendu général de l'app
+    console.log("App Component Rendered"); // Ajout d'un log pour le rendu général de l'apps
 
     return (
         <ClerkProvider publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}>
