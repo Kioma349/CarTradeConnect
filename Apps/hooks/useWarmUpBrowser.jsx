@@ -1,13 +1,13 @@
 import React from "react";
-import * as WebBroswer from "expo-web-browser";
+import * as WebBrowser from "expo-web-browser";
 
 
 export const useWarmpUpBrowser = () => {
 
     React.useEffect(() => {
-        void WebBroswer.warmUpAsync();
+        void WebBrowser.warmUpAsync();
         return () => {
-            void WebBroswer.coolDownAsync();
+            void WebBrowser.coolDownAsync();
         };
     }, []);
 }; 

@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function HomeScreen() {
   return (
-    <View>
+    <View style={{padding:20}}>
       <Text>HomeScreen</Text>
     </View>
   )

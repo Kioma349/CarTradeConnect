@@ -6,13 +6,13 @@ import { Video, ResizeMode } from 'expo-av';
 import Colors from '../../Screens/Utils/Colors';
 import { useWarmpUpBrowser } from '../../hooks/useWarmUpBrowser';
 import { useOAuth } from '@clerk/clerk-expo';
-import { ClerkProvider , SignedIn, SignedOut ,useOAuth } from '@clerk/clerk-expo';
-import {supabase} from './../../Utils/SupabaseConfig'
+//import {supabase} from '../../Screens/Utils/SupabaseConfig';
 
 WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginScreen() {
-        useWarmpUpBrowser();
+
+    useWarmpUpBrowser();
 
         const { startOAuthFlow } = useOAuth({ strategy:"oauth_google"});
 
@@ -23,39 +23,21 @@ export default function LoginScreen() {
                 await startOAuthFlow();
 
                 if (createdSessionId) {
-
-                    if(signUp?.emailAddress)
-                        {
-                                                    
-                            const { data, error } = await supabase
-                            .from('Users')
-                            .insert([
-                            { name: signUp?.firstName, 
-                                email: signUp?.emailAddress },
-                            ])
-                            .select()
-                                        if(data)
-                                        {
-                                            console.log(data);
-                                        }
-                        }
-                 
-
                     setActive({ session: createdSessionId});
                 } else {
                     // use signUp or signIn for nexr steps such as MFA
                 }    
 
-                } catch(err){
+                } catch(err) {
                     console.error("OAuth error", err);
                 }
             }, []);
-
 
   return (
     <View style={{flex:1, }}>
     <Video
     style={styles.video}
+   
     source={{
         uri: 'https://videos.pexels.com/video-files/20153917/20153917-uhd_2560_1440_24fps.mp4',
     }}
@@ -64,12 +46,11 @@ export default function LoginScreen() {
     resizeMode='cover'
     isLooping={true}
     />
-        
 
-        <View style={{
+<View style={{
             display:'flex',
             alignItems:'center',
-            paddingTop:300, //position des 2 texts 
+            paddingTop:100, //position des 2 texts 
             flex:1,
             paddingHorizontal:20,
             backgroundColor:Colors.BACKGROUND_TRASNP,
@@ -80,10 +61,12 @@ export default function LoginScreen() {
                     fontFamily:'outfit-bold',
                     color:Colors.WHITE,
                     fontSize:35,
+
             }}
             
             >CarTradeConnect Login </Text>
-            <Text
+
+<Text
             style={{
                 fontFamily:'outfit',
                 color:Colors.WHITE,
@@ -93,11 +76,9 @@ export default function LoginScreen() {
             }}
             >Best Easy Trade Car Application</Text>
 
-                <TouchableOpacity 
-                // on fait onPress={()=>console.log('Login button click')} pour tester si le bouton fonctionne et onPress={onPress} pour lancer la connexion avec google
-                onPress={onPress}
-
-                style={{
+            <TouchableOpacity 
+                onPress = {onPress} 
+            style={{
                     display:'flex',
                     alignItems:'center',
                     gap:10,
@@ -107,9 +88,9 @@ export default function LoginScreen() {
                     paddingHorizontal:55,
                     borderRadius:99,
                     position:'absolute',
-                    bottom:150
+                    bottom:300
                 }}>
-                    <Image source={require('./../../../assets/images/google.png')}
+            <Image source={require('./../../../assets/images/google.png')}
                     style={{
                         width:30,
                         height:30
@@ -118,8 +99,8 @@ export default function LoginScreen() {
                  <Text style={{
                     fontFamily:'outfit',
                  }} >Se connecter avec google</Text>
-                 </TouchableOpacity >
-        </View>
+            </TouchableOpacity>
+            </View>
     </View>
   )
 }

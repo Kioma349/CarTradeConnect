@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "CarTradeConnect_mobile_app",
-    "slug": "CarTradeConnect_mobile_app",
+    "name": "tiktok-clone",
+    "slug": "tiktok-clone",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,8 +23,8 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-font"
-    ]
+    "extra": {
+      "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_Z29sZGVuLWVhcndpZy0xMC5jbGVyay5hY2NvdW50cy5kZXYk"
+    }
   }
 }
