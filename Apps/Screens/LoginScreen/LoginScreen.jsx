@@ -6,7 +6,7 @@ import { Video, ResizeMode } from 'expo-av';
 import Colors from '../../Screens/Utils/Colors';
 import { useWarmpUpBrowser } from '../../hooks/useWarmUpBrowser';
 import { useOAuth } from '@clerk/clerk-expo';
-//import {supabase} from '../../Screens/Utils/SupabaseConfig';
+import {supabase} from '../../Screens/Utils/SupabaseConfig';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -24,6 +24,22 @@ export default function LoginScreen() {
 
                 if (createdSessionId) {
                     setActive({ session: createdSessionId});
+                    
+                    if (signUp?.emailAddress) 
+                    {
+                        const { data, error } = await supabase
+                            .from('Users')
+                            .insert([
+                                { name: signUp?.firstName + signUp?.lastName, 
+                                  email: signUp?.emailAddress, },
+                            ])
+                            .select()
+
+                            if (data) {
+                                console.log("L'utilisateur est connecté pour la premier fois", data);
+                            }
+                    }
+
                 } else {
                     // use signUp or signIn for nexr steps such as MFA
                 }    
