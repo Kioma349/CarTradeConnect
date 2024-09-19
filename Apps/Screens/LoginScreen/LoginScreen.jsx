@@ -36,7 +36,7 @@ export default function LoginScreen() {
                             .select()
 
                             if (data) {
-                                console.log("L'utilisateur est connecté pour la premier fois", data);
+                                console.log("L'utilisateur est connecté pour la première fois", data);
                             }
                     }
 
