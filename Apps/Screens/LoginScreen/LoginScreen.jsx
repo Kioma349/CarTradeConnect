@@ -30,13 +30,18 @@ export default function LoginScreen() {
                         const { data, error } = await supabase
                             .from('Users')
                             .insert([
-                                { name: signUp?.firstName + signUp?.lastName, 
-                                  email: signUp?.emailAddress, },
+                                { name: signUp?.firstName + " " +  signUp?.lastName, 
+                                  email: signUp?.emailAddress,
+                                usermame:(signUp?.emailAddress).split('@')[0], },
                             ])
                             .select()
 
                             if (data) {
                                 console.log("L'utilisateur est connecté pour la première fois", data);
+                            }
+                    
+                            if (error) {
+                                console.error("Erreur lors de l'inscription de l'utilisateur", error);
                             }
                     }
 
