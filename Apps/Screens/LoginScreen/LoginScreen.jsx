@@ -32,7 +32,7 @@ export default function LoginScreen() {
                             .insert([
                                 { name: signUp?.firstName + " " +  signUp?.lastName, 
                                   email: signUp?.emailAddress,
-                                usermame:(signUp?.emailAddress).split('@')[0], },
+                                username:(signUp?.emailAddress).split('@')[0], },
                             ])
                             .select()
 
