@@ -1,7 +1,7 @@
 import { View, Text, Button, StyleSheet } from 'react-native';
 import React, { useEffect } from 'react';
 import { useClerk, useUser } from '@clerk/clerk-expo';
-import {supabase} from '../../Screens/Utils/SupabaseConfig';
+import {supabase} from '../../Utils/SupabaseConfig';
 
 
 

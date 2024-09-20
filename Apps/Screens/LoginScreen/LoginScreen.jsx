@@ -6,7 +6,7 @@ import { Video, ResizeMode } from 'expo-av';
 import Colors from '../../Utils/Colors'
 import { useWarmpUpBrowser } from '../../hooks/useWarmUpBrowser';
 import { useOAuth } from '@clerk/clerk-expo';
-import {supabase} from '../../Screens/Utils/SupabaseConfig';
+import {supabase} from '../../Utils/SupabaseConfig';
 
 WebBrowser.maybeCompleteAuthSession();
 

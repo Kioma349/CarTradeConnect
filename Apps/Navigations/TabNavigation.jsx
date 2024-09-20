@@ -32,8 +32,10 @@ export default function TabNavigation() {
         }}
         
         />
-            {/* 
-           SearchScreen */}
+           
+           
+            {/* SearchScreen */}
+
         <Tab.Screen name="Search" component={SearchScreen} 
         
         options={{
@@ -53,6 +55,8 @@ export default function TabNavigation() {
         }}
         
         />
+
+
 
         <Tab.Screen name="Profile" component={ProfileScreen} 
         options={{
