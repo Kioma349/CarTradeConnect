@@ -1,33 +1,32 @@
 import { View, Text, Button, StyleSheet } from 'react-native';
-import React from 'react';
-import { useClerk } from '@clerk/clerk-expo';
+import React, { useEffect } from 'react';
+import { useClerk, useUser } from '@clerk/clerk-expo';
+import {supabase} from '../../Screens/Utils/SupabaseConfig';
+
+
 
 export default function HomeScreen() {
-  const { signOut } = useClerk();
+  const { user } = useUser();
 
-  const handleSignOut = async () => {
-    await signOut();  // Appel de la fonction de déconnexion
-  };
+  useEffect(() => {
+    user&&updateProfileImage();
+  },[user]);
+
+  const updateProfileImage = async () => {
+    const { data, error } = await supabase
+      .from('Users')
+      .update({ profileImage: user?.imageUrl})
+      .eq('email', user?.primaryEmailAddress?.emailAddress)
+      .is('profileImage', null)
+      .select();
+
+      console.log("Mise à jour de l'image de profil", data);
+      
+  }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Bienvenue sur HomeScreen</Text>
-      <Button title="Déconnexion" onPress={handleSignOut} color="#FF6347" />
+    <View style={{padding:20}}>
+      <Text>HomeScreen</Text>
     </View>
-  );
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f5f5f5', // Couleur de fond de l'écran
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#333', // Couleur du texte
-  }
-});
