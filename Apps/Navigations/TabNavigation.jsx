@@ -26,6 +26,7 @@ export default function TabNavigation() {
         
         <Tab.Screen name="Home" component={HomeScreen} 
         options={{
+            headerShown:false,
             tabBarIcon: ({ color, size }) => (
                 <FontAwesome name="home" size={size} color={color} />
             )
@@ -39,6 +40,7 @@ export default function TabNavigation() {
         <Tab.Screen name="Search" component={SearchScreen} 
         
         options={{
+            headerShown:false,
             tabBarIcon: ({ color, size }) => (
                 <Ionicons name="search" size={size} color={color} />
             )
@@ -49,6 +51,9 @@ export default function TabNavigation() {
 
         <Tab.Screen name="Add" component={AddScreen} 
         options={{
+
+            headerShown:false,
+
             tabBarIcon: ({ color, size }) => (
                 <Ionicons name="add-circle" size={size} color={color} />
             )
@@ -60,6 +65,7 @@ export default function TabNavigation() {
 
         <Tab.Screen name="Profile" component={ProfileScreen} 
         options={{
+            headerShown:false,
             tabBarIcon: ({ color, size }) => (
                 <Ionicons name="people-circle" size={24} color="black" />
             )
