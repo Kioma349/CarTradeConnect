@@ -10,7 +10,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     user&&updateProfileImage();
-  },[user]);
+    },[user]);
 
   const updateProfileImage = async () => {
     const { data, error } = await supabase

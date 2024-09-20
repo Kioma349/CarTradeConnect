@@ -6,6 +6,8 @@ import Constants from 'expo-constants';
 import LoginScreen from './Apps/Screens/LoginScreen/LoginScreen';
 import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-expo';
 import HomeScreen from './Apps/Screens/Home/HomeScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import TabNavigation from './Apps/Navigations/TabNavigation';
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -20,8 +22,12 @@ export default function App() {
      
                 <SignedIn>
 
-                     {/* //<Text>Vous êtes connecté</Text> */}
-                     <HomeScreen />
+                  <NavigationContainer>
+                    <TabNavigation />
+                  </NavigationContainer>
+
+                     {/* <Text>Vous êtes connecté</Text>
+                     <HomeScreen /> */}
 
                 </SignedIn>
 
