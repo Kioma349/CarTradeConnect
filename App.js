@@ -18,6 +18,9 @@ export default function App() {
 
   return (
     <ClerkProvider publishableKey={Constants.expoConfig.extra.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}>
+
+
+      //ne pas remove le sytle container
     <View style={styles.container}>
      
                 <SignedIn>
