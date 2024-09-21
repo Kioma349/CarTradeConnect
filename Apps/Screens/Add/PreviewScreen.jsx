@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, TextInput, Image } from 'react-native'
 import React, { useEffect } from 'react'
 import { useRoute } from '@react-navigation/native'
 import Colors from '../../Utils/Colors'
@@ -18,7 +18,7 @@ export default function PreviewScreen() {
 
   
   return (
-    <View style={{padding: 20}}>
+    <View style={{padding: 20, backgroundColor:Colors.WHITE, flex:1}}>
       <View style={{
         alignItems: 'center',
         marginTop: 45,
@@ -38,6 +38,25 @@ export default function PreviewScreen() {
                 marginTop: 15
                 
               }}/>
+              <TextInput
+              
+              numberOfLines={3}
+              placeholder='Description'
+              style={{
+                borderWidth: 2,
+                width: '100%',
+                height: 50,
+                borderRadius: 10,
+                marginTop: 50,
+                borderColor: Colors.BACKGROUND_TRASNP,
+                paddingHorizontal:20
+
+                
+                
+                
+              }}
+              
+              />
 
       </View>
       
