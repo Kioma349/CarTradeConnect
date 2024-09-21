@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Image, KeyboardAvoidingView, ScrollView } from 'react-native'
+import { View, Text, TextInput, Image, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import { useRoute } from '@react-navigation/native'
 import Colors from '../../Utils/Colors'
@@ -25,7 +25,7 @@ export default function PreviewScreen() {
        <View style={{
         alignItems: 'center',
         marginTop: 100,
-        
+
       }}>
             <Text 
             style={{ 
@@ -61,9 +61,27 @@ export default function PreviewScreen() {
               }}
               
               />
+              <TouchableOpacity 
 
-      </View>
-      </ScrollView>
+
+                      style={{
+                        backgroundColor:Colors.BLACK,
+                        padding:20,
+                        paddingHorizontal:65,
+                        borderRadius:99,
+                        marginTop:60
+
+
+                      }}>
+                          <Text 
+                          style={{
+                            fontFamily:'outfit',
+                            color:Colors.WHITE}}>Publier</Text>
+
+
+              </TouchableOpacity>
+          </View>
+        </ScrollView>
       
       </KeyboardAvoidingView>
 

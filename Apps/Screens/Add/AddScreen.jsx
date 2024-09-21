@@ -111,8 +111,7 @@ export default function AddScreen() {
                   <Text 
                   style={{
                     fontFamily:'outfit',
-                    color:Colors.WHITE
-                  }}>Sélectionne ta vidéo</Text>
+                    color:Colors.WHITE}}>Sélectionne ta vidéo</Text>
               
               
         </TouchableOpacity>
