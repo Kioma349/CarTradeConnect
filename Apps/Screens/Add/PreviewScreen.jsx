@@ -1,19 +1,32 @@
 import { View, Text, TextInput, Image, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import { useRoute, useNavigation } from '@react-navigation/native'
+import { useState } from 'react';
+
+
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Colors from '../../Utils/Colors'
 
+
+
 export default function PreviewScreen() {
 
-  const params = useRoute().params;
-  const navigation = useNavigation();
+      const params = useRoute().params;
+      const navigation = useNavigation();
+      const [description, setDescription] = useState("");
+
 
 
   useEffect(() => {
     console.log(params);
   },[]);
 
+
+        // Fonction pour publier la video
+      const publishHandlet = () => {
+      console.log(description);
+      
+    }
     return (
     <KeyboardAvoidingView style={{backgroundColor:Colors.WHITE, flex:1}}>
       <ScrollView style={{padding: 20,}}>
@@ -60,6 +73,9 @@ export default function PreviewScreen() {
               
               numberOfLines={3}
               placeholder='Description'
+
+              onChangeText={(value)=>setDescription(value)} //recupere la valeur de la description
+
               style={{
                 borderWidth: 2,
                 width: '100%',
