@@ -19,7 +19,11 @@ export default function PreviewScreen() {
       <ScrollView style={{padding: 20,}}>
 
 
-        <View style={{
+        <TouchableOpacity 
+        
+        onPress={() => navigation.goBack()}
+        
+        style={{
           display: 'flex',
           flexDirection: 'row',
           gap: 10,
@@ -27,8 +31,8 @@ export default function PreviewScreen() {
           marginTop: 10,
         }}>
           <Ionicons name="arrow-back-circle-sharp" size={54} color="black" />
-          <Text style={{fontFamily:'outfit-bold', fontSize:18}}>Retour</Text>
-        </View>
+          <Text style={{fontFamily:'outfit', fontSize:18}}>Retour</Text>
+        </TouchableOpacity>
 
      
        <View style={{
