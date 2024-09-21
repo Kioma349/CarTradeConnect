@@ -3,9 +3,13 @@ import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
 import Colors from '../../Utils/Colors'
 import * as VideoThumbnails from 'expo-video-thumbnails';
-
+import { useNavigation } from '@react-navigation/native';
 
 export default function AddScreen() {
+
+
+
+          const navigation = useNavigation();
 
 
           // Utilisé pour accédé a la selection de l'image à uploder
@@ -20,7 +24,7 @@ export default function AddScreen() {
               quality: 1,
             });
 
-            console.log(result);
+            // console.log(result); // result contient les informations de l'image selectionné
 
             if (!result.canceled) {
               console.log(result.assets[0].uri);
@@ -44,8 +48,16 @@ export default function AddScreen() {
                     }
                   );
 
-                  console.log("Voici le thumbail",uri);
+                  // console.log("Voici le thumbail",uri); // uri contient le thumbnail de la video
+
                   // setImage(uri); // uri contient le thumbnail de la video
+
+                  navigation.navigate('preview-screen',{
+                    videoUri:videoUri,
+                    thumbnailUri:uri
+
+                  })
+
                 } catch (e) {
                   console.warn(e);
                 }
