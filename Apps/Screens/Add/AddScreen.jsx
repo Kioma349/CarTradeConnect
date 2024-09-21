@@ -53,8 +53,8 @@ export default function AddScreen() {
                   // setImage(uri); // uri contient le thumbnail de la video
 
                   navigation.navigate('preview-screen',{
-                    videoUri:videoUri,
-                    thumbnailUri:uri
+                    video:videoUri,
+                    thumbnail:uri
 
                   })
 
