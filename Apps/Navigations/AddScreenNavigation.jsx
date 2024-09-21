@@ -7,7 +7,9 @@ import PreviewScreen from '../Screens/Add/PreviewScreen';
 const Stack = createStackNavigator();
 export default function AddScreenNavigation() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{
+      headerShown:false
+    }}>
       <Stack.Screen name="add-screen" component={AddScreen} />
       <Stack.Screen name="preview-screen" component={PreviewScreen} />
     </Stack.Navigator>
