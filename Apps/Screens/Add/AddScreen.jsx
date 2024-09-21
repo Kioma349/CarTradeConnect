@@ -2,8 +2,13 @@ import React from 'react'
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
 import Colors from '../../Utils/Colors'
+import * as VideoThumbnails from 'expo-video-thumbnails';
+
 
 export default function AddScreen() {
+
+
+          // Utilisé pour accédé a la selection de l'image à uploder
 
 
           const SelectionVideoFile = async () => {
@@ -19,11 +24,34 @@ export default function AddScreen() {
 
             if (!result.canceled) {
               console.log(result.assets[0].uri);
-              setImage(result.assets[0].uri);
+              GenerateVideoThumbnail(result.assets[0].uri);
+
+
+              // // Utilisé pour generer thumbnail de la video
+              // setImage(result.assets[0].uri);
             }
           };
 
+              // Utilisé pour generer thumbnail de la video
 
+
+              const GenerateVideoThumbnail = async (videoUri) => {
+                try {
+                  const { uri } = await VideoThumbnails.getThumbnailAsync(
+                    videoUri,
+                    {
+                      time: 10000,
+                    }
+                  );
+
+                  console.log("Voici le thumbail",uri);
+                  // setImage(uri); // uri contient le thumbnail de la video
+                } catch (e) {
+                  console.warn(e);
+                }
+              };
+
+              
           return (
             <View 
             style={{
