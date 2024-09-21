@@ -1,38 +1,46 @@
 import { View, Text, TextInput, Image, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
-import { useRoute } from '@react-navigation/native'
+import { useRoute, useNavigation } from '@react-navigation/native'
+import Ionicons from '@expo/vector-icons/Ionicons';
 import Colors from '../../Utils/Colors'
-
 
 export default function PreviewScreen() {
 
   const params = useRoute().params;
-
+  const navigation = useNavigation();
 
 
   useEffect(() => {
     console.log(params);
   },[]);
 
-
-
-  
-  return (
+    return (
     <KeyboardAvoidingView style={{backgroundColor:Colors.WHITE, flex:1}}>
-      <ScrollView style={{padding: 20, backgroundColor:Colors.WHITE}}>
+      <ScrollView style={{padding: 20,}}>
+
+
+        <View style={{
+          display: 'flex',
+          flexDirection: 'row',
+          gap: 10,
+          alignItems: 'center',
+          marginTop: 10,
+        }}>
+          <Ionicons name="arrow-back-circle-sharp" size={54} color="black" />
+          <Text style={{fontFamily:'outfit-bold', fontSize:18}}>Retour</Text>
+        </View>
 
      
        <View style={{
         alignItems: 'center',
-        marginTop: 100,
+        marginTop: 80,
+        
 
       }}>
             <Text 
             style={{ 
               fontFamily:'outfit-bold', 
-              fontSize:20}} 
-              
-              > Add Details</Text>
+              fontSize:20 }}> Add Details</Text>
 
               <Image source={{ uri:params?.thumbnail }}
               style={{
@@ -42,6 +50,8 @@ export default function PreviewScreen() {
                 marginTop: 15
                 
               }}/>
+              
+              
               <TextInput
               
               numberOfLines={3}
@@ -55,15 +65,10 @@ export default function PreviewScreen() {
                 borderColor: Colors.BACKGROUND_TRASNP,
                 paddingHorizontal:20
 
-                
-                
-                
               }}
               
               />
               <TouchableOpacity 
-
-
                       style={{
                         backgroundColor:Colors.BLACK,
                         padding:20,
@@ -77,7 +82,6 @@ export default function PreviewScreen() {
                           style={{
                             fontFamily:'outfit',
                             color:Colors.WHITE}}>Publier</Text>
-
 
               </TouchableOpacity>
           </View>
