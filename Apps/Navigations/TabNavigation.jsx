@@ -8,6 +8,7 @@ import ProfileScreen from '../Screens/Profile/ProfileScreen';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Colors from '../Utils/Colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import AddScreenNavigation from '../Navigations/AddScreenNavigation';
 
 
 const Tab = createBottomTabNavigator();
@@ -49,7 +50,7 @@ export default function TabNavigation() {
         />
 
 
-        <Tab.Screen name="Add" component={AddScreen} 
+        <Tab.Screen name="Add" component={AddScreenNavigation} 
         options={{
 
             headerShown:false,

@@ -1,6 +1,6 @@
 import React from 'react'
 import * as WebBrowser from 'expo-web-browser';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { Video, ResizeMode } from 'expo-av';
 import Colors from '../../Utils/Colors'
