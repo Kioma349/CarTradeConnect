@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Image } from 'react-native'
+import { View, Text, TextInput, Image, KeyboardAvoidingView, ScrollView } from 'react-native'
 import React, { useEffect } from 'react'
 import { useRoute } from '@react-navigation/native'
 import Colors from '../../Utils/Colors'
@@ -18,10 +18,14 @@ export default function PreviewScreen() {
 
   
   return (
-    <View style={{padding: 20, backgroundColor:Colors.WHITE, flex:1}}>
-      <View style={{
+    <KeyboardAvoidingView style={{backgroundColor:Colors.WHITE, flex:1}}>
+      <ScrollView style={{padding: 20, backgroundColor:Colors.WHITE}}>
+
+     
+       <View style={{
         alignItems: 'center',
-        marginTop: 45,
+        marginTop: 100,
+        
       }}>
             <Text 
             style={{ 
@@ -59,7 +63,9 @@ export default function PreviewScreen() {
               />
 
       </View>
+      </ScrollView>
       
-    </View>
+      </KeyboardAvoidingView>
+
   )
 }
