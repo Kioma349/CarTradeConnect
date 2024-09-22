@@ -24,9 +24,16 @@ export default function PreviewScreen() {
 
         // Fonction pour publier la video
       const publishHandlet = () => {
-      console.log(description);
+      
+
+    }
+
+    const UploadFileToAws=(file)=>{
+      // On va envoyer le fichier sur le serveur AWS
+      const fileType= file.split('.').pop(); //ex : mp4, .jpg
       
     }
+
     return (
     <KeyboardAvoidingView style={{backgroundColor:Colors.WHITE, flex:1}}>
       <ScrollView style={{padding: 20,}}>

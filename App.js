@@ -11,37 +11,29 @@ import TabNavigation from './Apps/Navigations/TabNavigation';
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
-      'outfit': require('./assets/fonts/Outfit-Regular.ttf'),
-      'outfit-medium': require('./assets/fonts/Outfit-Medium.ttf'),
-      'outfit-bold': require('./assets/fonts/Outfit-Bold.ttf'),
+    'outfit': require('./assets/fonts/Outfit-Regular.ttf'),
+    'outfit-medium': require('./assets/fonts/Outfit-Medium.ttf'),
+    'outfit-bold': require('./assets/fonts/Outfit-Bold.ttf'),
   });
+
+  if (!fontsLoaded) {
+    return <Text>Loading Fonts...</Text>;
+  }
 
   return (
     <ClerkProvider publishableKey={Constants.expoConfig.extra.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}>
-
-
-      
-    <View style={styles.container}>
-     
-                <SignedIn>
-
-                  <NavigationContainer>
-                    <TabNavigation />
-                  </NavigationContainer>
-
-                     {/* <Text>Vous êtes connecté</Text>
-                     <HomeScreen /> */}
-
-                </SignedIn>
-
-                
-                <SignedOut>
-                    <LoginScreen />
-                </SignedOut>
-
-     </View>
-     </ClerkProvider>
-   
+      <View style={styles.container}>
+        <StatusBar style="auto" />
+        <SignedIn>
+          <NavigationContainer>
+            <TabNavigation />
+          </NavigationContainer>
+        </SignedIn>
+        <SignedOut>
+          <LoginScreen />
+        </SignedOut>
+      </View>
+    </ClerkProvider>
   );
 }
 
@@ -49,6 +41,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    
   },
 });
