@@ -25,20 +25,17 @@ export default function PreviewScreen() {
         // Fonction pour publier la video
       const publishHandler = () => {
 
-        UploadFileToAws(params.video,'video'); //On envoie la video sur AWS
+        //UploadFileToAws(params.video,'video'); //On envoie la video sur AWS
+
+        UploadFileToAws(params.thumbnail,'image'); //On envoie la miniature sur AWS
       
 
     }
 
-    const UploadFileToAws=async(file)=>{
+    const UploadFileToAws=async(file,type)=>{
       // On va envoyer le fichier sur le serveur AWS
       const fileType= file.split('.').pop(); //ex : mp4, .jpg
-      let type; // Déclaration de la variable type
-      if (['mp4', 'mov', 'avi'].includes(fileType)) {
-        type = 'video'; // C'est une vidéo
-      } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileType)) {
-        type = 'image'; // C'est une image
-      }
+     
 
       const params={
         Bucket:'cartradeconnect-app',
@@ -52,7 +49,7 @@ export default function PreviewScreen() {
             const data=await s3bucket.upload(params)
             .promise().then(resp=>{
               console.log("Fichier Chargé ...");
-              console.log("RESP:",resp);
+              console.log("RESP:",resp?.Location);
             })
           }catch(e)
           {

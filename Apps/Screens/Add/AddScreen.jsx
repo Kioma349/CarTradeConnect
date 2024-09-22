@@ -12,9 +12,7 @@ export default function AddScreen() {
           const navigation = useNavigation();
 
 
-          // Utilisé pour accédé a la selection de l'image à uploder
-
-
+          // Utilisé pour accédé a la selection du fichier à uploder
           const SelectionVideoFile = async () => {
             // No permissions request is necessary for launching the image library
             let result = await ImagePicker.launchImageLibraryAsync({
@@ -27,6 +25,8 @@ export default function AddScreen() {
             // console.log(result); // result contient les informations de l'image selectionné
 
             if (!result.canceled) {
+              console.log("Selection cancelled");
+        
               console.log(result.assets[0].uri);
               GenerateVideoThumbnail(result.assets[0].uri);
 
@@ -60,6 +60,8 @@ export default function AddScreen() {
 
                 } catch (e) {
                   console.warn(e);
+                  console.warn("Error generating thumbnail:", e.message);
+                  alert('Failed to generate thumbnail. Please try again.');
                 }
               };
 
