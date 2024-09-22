@@ -13,7 +13,8 @@ export default function PreviewScreen() {
 
       const params = useRoute().params;
       const navigation = useNavigation();
-      const [description, setDescription] = useState("");
+      const [description, setDescription] = useState();
+      const [videoUrl, setVideoUrl] = useState();
 
 
 
@@ -23,11 +24,11 @@ export default function PreviewScreen() {
 
 
         // Fonction pour publier la video
-      const publishHandler = () => {
+      const publishHandler = async() => {
 
-        //UploadFileToAws(params.video,'video'); //On envoie la video sur AWS
+       await UploadFileToAws(params.video,'video'); //On envoie la video sur AWS
 
-        UploadFileToAws(params.thumbnail,'image'); //On envoie la miniature sur AWS
+       await UploadFileToAws(params.thumbnail,'image'); //On envoie la miniature sur AWS
       
 
     }
@@ -50,6 +51,15 @@ export default function PreviewScreen() {
             .promise().then(resp=>{
               console.log("Fichier Chargé ...");
               console.log("RESP:",resp?.Location);
+
+              if(type=='video')
+              {
+                setVideoUrl(resp?.Location);
+              }
+              else
+              {
+                console.log(resp.Location,videoUrl);
+              }
             })
           }catch(e)
           {
