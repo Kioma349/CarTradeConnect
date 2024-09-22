@@ -2,7 +2,7 @@ import { View, Text, TextInput, Image, KeyboardAvoidingView, ScrollView, Touchab
 import React, { useEffect } from 'react'
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { useState } from 'react';
-
+import { s3bucket } from '../../Utils/S3BucketConfig';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Colors from '../../Utils/Colors'
@@ -23,15 +23,43 @@ export default function PreviewScreen() {
 
 
         // Fonction pour publier la video
-      const publishHandlet = () => {
+      const publishHandler = () => {
+
+        UploadFileToAws(params.video,'video'); //On envoie la video sur AWS
       
 
     }
 
-    const UploadFileToAws=(file)=>{
+    const UploadFileToAws=async(file)=>{
       // On va envoyer le fichier sur le serveur AWS
       const fileType= file.split('.').pop(); //ex : mp4, .jpg
-      
+      let type; // Déclaration de la variable type
+      if (['mp4', 'mov', 'avi'].includes(fileType)) {
+        type = 'video'; // C'est une vidéo
+      } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileType)) {
+        type = 'image'; // C'est une image
+      }
+
+      const params={
+        Bucket:'cartradeconnect-app',
+        Key:`linus-${Date.now()}.${fileType}`,	//Ex. linus-Ferrari.mp4
+        Body: await fetch(file).then(resp=>resp.blob()), //permet de recuperer le fichier
+        ACL:'public-read', //permet de dire que le fichier est public
+        ContentType:type=='video'?`video/${fileType}`:`image/${fileType}`, // permet de dire à AWS le type de fichier
+      }
+
+          try{
+            const data=await s3bucket.upload(params)
+            .promise().then(resp=>{
+              console.log("Fichier Chargé ...");
+              console.log("RESP:",resp);
+            })
+          }catch(e)
+          {
+            console.log(e);
+          }
+          
+           
     }
 
     return (
@@ -96,6 +124,9 @@ export default function PreviewScreen() {
               
               />
               <TouchableOpacity 
+
+              onPress={publishHandler}
+
                       style={{
                         backgroundColor:Colors.BLACK,
                         padding:20,
