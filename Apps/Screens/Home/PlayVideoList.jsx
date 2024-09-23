@@ -1,12 +1,25 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreenStackNavigation from '../../Navigations/HomeScreenStackNavigation';
+import { View, Text, FlatList } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { useRoute } from '@react-navigation/native';
+import PlayVideoListItem from './PlayVideoListItem';
 
 export default function PlayVideoList() {
+  const params=useRoute().params;
+  const[videoList,setVideoList]=useState([]);
+
+  useEffect(()=>{
+    setVideoList([params.videoList]);
+  },[])
+
   return (
     <View>
-      <Text>PlayVideoList</Text>
+      <FlatList
+      data={videoList}
+      renderItem={({item})=>(
+        <PlayVideoListItem video={item}/>
+      )}
+      />
+
     </View>
   )
 }
