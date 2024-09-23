@@ -14,17 +14,15 @@ export default function HomeScreen() {
 
 
     useEffect(() => {
-        if (user) {
-            updateProfileImage();
-            getLatestVideoList(); // On récupère les 10 dernières vidéos
-        }
+        user && updateProfileImage();
+        setLoadCount(0);
     }, [user]);
 
 
     useEffect(() => {
         getLatestVideoList();
     }, [loadCount]);
-    
+
     const updateProfileImage = async () => {
         if (user?.imageUrl) {
             const { data, error } = await supabase
@@ -50,19 +48,19 @@ export default function HomeScreen() {
                     profileImage
                 )
             `)
-            .range(loadCount,loadCount+7)
+            .range(loadCount, loadCount + 7)
             // .range(0, 7) // On récupère les 10 dernières vidéos
-            .order('id', {ascending: true}); // On récupère les 10 dernières vidéos trier par l'id
-            // .order('createdAt', {ascending: false}); // On récupère les 10 dernières vidéos trier par la date de création
+            .order('id', { ascending: true }); // On récupère les 10 dernières vidéos trier par l'id
+        // .order('createdAt', {ascending: false}); // On récupère les 10 dernières vidéos trier par la date de création
 
 
-            setVideoList(data);
+        setVideoList(videoList=>[...videoList, ...data]);
 
-            console.log(data);
-            if(data){
-                setLoading(false);
-            }
-            // console.log(error);
+        console.log(data);
+        if (data) {
+            setLoading(false);
+        }
+        // console.log(error);
     }
 
     return (
@@ -83,17 +81,18 @@ export default function HomeScreen() {
 
             <View>
                 <FlatList
-                data={videoList}
-                numColumns={2}
-                style={{display:'flex'}}
-                onRefresh={getLatestVideoList} // On refresh la liste
+                    data={videoList}
+                    numColumns={2}
+                    style={{ display: 'flex' }}
+                    onRefresh={getLatestVideoList} // On refresh la liste
 
-                onEndReached={()=> setLoadCount(loadCount+7)} // On est à la fin de la liste
-                // onEndReached={()=> console.log('End reached')} // On est à la fin de la liste
-                refreshing= {loading} // On affiche le loading
-                renderItem={({item,index})=> (
-                    <VideoThumbnailItem video={item}/>
-                )}
+                    onEndReached={() => setLoadCount(loadCount + 7)} // On est à la fin de la liste
+                    onEndReachedThreshold={0.2}
+                    // onEndReached={()=> console.log('End reached')} // On est à la fin de la liste
+                    refreshing={loading} // On affiche le loading
+                    renderItem={({ item, index }) => (
+                        <VideoThumbnailItem video={item} />
+                    )}
                 />
             </View>
         </View>
