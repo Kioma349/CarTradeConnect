@@ -6,7 +6,7 @@ import Colors from '../../Utils/Colors'
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { s3bucket } from '../../Utils/S3BucketConfig'
 import { supabase } from '../../Utils/SupabaseConfig'
-import Ionicons from '@expo/vector-icons/Ionicons' 
+import Ionicons from '@expo/vector-icons/Ionicons'
 
 
 
@@ -21,41 +21,52 @@ export default function PlayVideoListItem({ video }) {
   return (
     <View style={styles.container}>
 
-      <View style={{ position: 'absolute', zIndex: 10, bottom: 20, padding: 20 }}>
-      <View>
-        <View style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 10,
+      <View style={{
+        position: 'absolute',
+        zIndex: 10,
+        bottom: 20,
+        padding: 20,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        alignItems: 'flex-end'
+      }}>
 
-        }}>
+        <View>
+          <View style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 10,
 
-          <Image source={{ uri: video?.Users.profileImage }}
-            style={{ width: 40, height: 40, backgroundColor: Colors.WHITE, borderRadius: 99 }} />
+          }}>
+
+            <Image source={{ uri: video?.Users.profileImage }}
+              style={{ width: 40, height: 40, backgroundColor: Colors.WHITE, borderRadius: 99 }} />
+
+            <Text style={{
+              fontFamily: 'outfit',
+              fontSize: 18, color: Colors.WHITE
+            }}>{video?.Users.username}</Text>
+
+          </View>
 
           <Text style={{
             fontFamily: 'outfit',
-            fontSize: 18, color: Colors.WHITE
-          }}>{video?.Users.username}</Text>
+            fontSize: 18, color: Colors.WHITE, marginTop: 10
+          }}>{video?.description}</Text>
 
         </View>
 
-        <Text style={{
-          fontFamily: 'outfit',
-          fontSize: 18, color: Colors.WHITE, marginTop: 10
-        }}>{video?.description}</Text>
 
-    </View>
-    
-    
-      <View>
+        <View style={{ display: 'flex', gap: 40 }}>
 
-      <Ionicons name="heart-outline" size={24} color="white" />
-      <Ionicons name="chatbubble-outline" size={24} color="white" />
-      <Ionicons name="paper-plane-outline" size={24} color="white" />
-      </View>
-        
+          <Ionicons name="heart-outline" size={45} color="white" />
+          <Ionicons name="chatbubble-outline" size={45} color="white" />
+          <Ionicons name="paper-plane-outline" size={45} color="white" />
+        </View>
+
       </View>
 
 
@@ -66,7 +77,7 @@ export default function PlayVideoListItem({ video }) {
         useNativeControls
         resizeMode={ResizeMode.COVER}
         isLooping
-        shouldPlay
+        shouldPlay = {false}
         onPlaybackStatusUpdate={setStatus}
       />
     </View>

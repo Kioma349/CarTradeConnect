@@ -54,7 +54,6 @@ export default function HomeScreen() {
             .order('id', { ascending: true }); // On récupère les 10 dernières vidéos trier par l'id
         // .order('createdAt', {ascending: false}); // On récupère les 10 dernières vidéos trier par la date de création
 
-
         setVideoList(videoList=>[...videoList, ...data]);
 
         console.log(data);

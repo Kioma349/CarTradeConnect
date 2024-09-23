@@ -1,46 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Image, KeyboardAvoidingView, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import PlayVideoListItem from './PlayVideoListItem';
-import Ionicons from '@expo/vector-icons/Ionicons'
-import Colors from '../../Utils/Colors'
-import { FlatList } from 'react-native-gesture-handler';
-
+import { supabase } from '../../Utils/SupabaseConfig';
 
 export default function PlayVideoList() {
-  const { params } = useRoute();
-  const [videoList, setVideoList] = useState([]);
-  const navigation = useNavigation();
+    const { params } = useRoute();
+    const navigation = useNavigation();
+    const [videoList, setVideoList] = useState([]);
 
-  useEffect(() => {
-    // S'assure que les données de vidéo sont passées et les met dans un état
-    if (params?.selectedVideo) {
-      setVideoList([params.selectedVideo]);  // Assurez-vous que selectedVideo est un objet approprié
-    }
-  }, [params]);
+    useEffect(() => {
+        if (params?.selectedVideo) {
+            setVideoList([params.selectedVideo]); // Assurez-vous que ceci est nécessaire.
+            getLatestVideoList(params.selectedVideo.id);
+        }
+    }, [params]);
 
-  return (
-    <View>
+    const getLatestVideoList = async (excludeId) => {
+        const { data, error } = await supabase
+            .from('PostList')
+            .select(`
+                *,
+                Users (
+                    username, 
+                    name, 
+                    profileImage
+                )
+            `)
+            .not('id', 'eq', excludeId) // Excluez l'ID de la vidéo sélectionnée pour éviter les doublons
+            .order('id', { ascending: true });
 
-      <View>
+        if (error) {
+            console.error('Erreur lors de la récupération des vidéos:', error);
+            return;
+        }
 
-      <TouchableOpacity style={{position:'absolute', zIndex:10, padding:20, paddingTop:50
-      }} onPress={() => {navigation.goBack()}}>
-        <Ionicons name="arrow-back-circle-sharp" size={54} color="black" />
-        <Text style={{fontFamily: 'outfit',
-        fontSize: 18}}>Retour</Text>
-      </TouchableOpacity>
+        setVideoList(prev => [...prev, ...data]); // Fusionner les vidéos sans doublons
+    };
 
-      </View>
+    return (
+        <View>
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                <Ionicons name="arrow-back-circle-sharp" size={54} color="black" />
+                <Text style={styles.backText}>Retour</Text>
+            </TouchableOpacity>
 
-      <FlatList
-        data={videoList}
-        style={{zIndex:-1}}
-        renderItem={({ item }) => <PlayVideoListItem video={item} />}
-        keyExtractor={item => item.id.toString()}
-      />
-
-    </View>
-  );
+            <FlatList
+                data={videoList}
+                renderItem={({ item }) => <PlayVideoListItem video={item} />}
+                keyExtractor={item => item.id.toString()} // Assurez-vous que la clé est basée sur l'ID
+            />
+        </View>
+    );
 }
 
+const styles = StyleSheet.create({
+    backButton: {
+        position: 'absolute', 
+        zIndex: 10, 
+        padding: 20, 
+        paddingTop: 50
+    },
+    backText: {
+        fontFamily: 'outfit',
+        fontSize: 18
+    }
+});
