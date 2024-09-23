@@ -1,10 +1,19 @@
-import { View, Text } from 'react-native'
+import { View, Text, Image } from 'react-native'
 import React from 'react'
 
 export default function VideoThumbnailItem({video}) {
   return (
     <View>
-      <Text>VideoThumbnailItem</Text>
+      
+    <Image source={{uri:video?.thumbnail}}
+    style = {{width:'100%', height:250}}
+
+    />
+
+
+
+
+
     </View>
   )
 }
