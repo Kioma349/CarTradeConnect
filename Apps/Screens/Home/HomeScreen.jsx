@@ -69,6 +69,7 @@ export default function HomeScreen() {
             <View>
                 <FlatList
                 data={videoList}
+                numColumns={2}
                 renderItem={({item,index})=> (
                     <VideoThumbnailItem video={item}/>
                 )}
