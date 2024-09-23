@@ -9,6 +9,7 @@ import VideoThumbnailItem from './VideoThumbnailItem';
 export default function HomeScreen() {
     const { user } = useUser();
     const [videoList, setVideoList] = useState([]);
+    const [loading, setLoading] = useState(false);
 
 
     useEffect(() => {
@@ -32,6 +33,7 @@ export default function HomeScreen() {
     }
 
     const getLatestVideoList = async () => {
+        setLoading(true); // On met le loading à true
         const { data, error } = await supabase
             .from('PostList')
             .select(`
@@ -46,7 +48,11 @@ export default function HomeScreen() {
 
 
             setVideoList(data);
-            // console.log(data);
+
+            console.log(data);
+            if(data){
+                setLoading(false);
+            }
             // console.log(error);
     }
 
@@ -70,6 +76,9 @@ export default function HomeScreen() {
                 <FlatList
                 data={videoList}
                 numColumns={2}
+                style={{display:'flex'}}
+                onRefresh={getLatestVideoList} // On refresh la liste
+                refreshing= {loading} // On affiche le loading
                 renderItem={({item,index})=> (
                     <VideoThumbnailItem video={item}/>
                 )}
