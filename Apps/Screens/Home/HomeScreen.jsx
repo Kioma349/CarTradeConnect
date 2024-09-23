@@ -1,11 +1,15 @@
-import { View, Text, Button, StyleSheet, Image } from 'react-native';
-import React, { useEffect } from 'react';
+import { View, Text, Button, StyleSheet, Image, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { useUser } from '@clerk/clerk-expo';
 import { supabase } from '../../Utils/SupabaseConfig';
 import Colors from '../../Utils/Colors'
+import { Video } from 'expo-av';
+import VideoThumbnailItem from './VideoThumbnailItem';
 
 export default function HomeScreen() {
     const { user } = useUser();
+    const [videoList, setVideoList] = useState([]);
+
 
     useEffect(() => {
         if (user) {
@@ -22,7 +26,8 @@ export default function HomeScreen() {
                 .eq('email', user.primaryEmailAddress.emailAddress)
                 .select();
 
-            console.log(data);
+            // console.log(data); 
+            // setVideoList(data);
         }
     }
 
@@ -39,8 +44,10 @@ export default function HomeScreen() {
             `)
             .range(0, 9);
 
-        console.log(data);
-        console.log(error);
+
+            setVideoList(data);
+            // console.log(data);
+            // console.log(error);
     }
 
     return (
@@ -57,6 +64,15 @@ export default function HomeScreen() {
 
                 <Image source={{ uri: user?.imageUrl }}
                     style={{ width: 50, height: 50, borderRadius: 99 }} />
+            </View>
+
+            <View>
+                <FlatList
+                data={videoList}
+                renderItem={({item,index})=> (
+                    <VideoThumbnailItem video={item}/>
+                )}
+                />
             </View>
         </View>
     )

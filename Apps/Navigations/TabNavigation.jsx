@@ -14,67 +14,67 @@ import AddScreenNavigation from '../Navigations/AddScreenNavigation';
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigation() {
-  return (
+    return (
 
 
-   <Tab.Navigator 
-   screenOptions={{
-    
-        tarBarActiveTintColor:Colors.BLACK
-        
-        }}
-    >
-        
-        <Tab.Screen name="Home" component={HomeScreen} 
-        options={{
-            headerShown:false,
-            tabBarIcon: ({ color, size }) => (
-                <FontAwesome name="home" size={size} color={color} />
-            )
-        }}
-        
-        />
-           
-           
+        <Tab.Navigator
+            screenOptions={{
+
+                tarBarActiveTintColor: Colors.BLACK
+
+            }}
+        >
+
+            <Tab.Screen name="Home" component={HomeScreen}
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({ color, size }) => (
+                        <FontAwesome name="home" size={size} color={color} />
+                    )
+                }}
+
+            />
+
+
             {/* SearchScreen */}
 
-        <Tab.Screen name="Search" component={SearchScreen} 
-        
-        options={{
-            headerShown:false,
-            tabBarIcon: ({ color, size }) => (
-                <Ionicons name="search" size={size} color={color} />
-            )
-        }}
-        
-        />
+            <Tab.Screen name="Search" component={SearchScreen}
+
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="search" size={size} color={color} />
+                    )
+                }}
+
+            />
 
 
-        <Tab.Screen name="Add" component={AddScreenNavigation} 
-        options={{
+            <Tab.Screen name="Add" component={AddScreenNavigation}
+                options={{
 
-            headerShown:false,
+                    headerShown: false,
 
-            tabBarIcon: ({ color, size }) => (
-                <Ionicons name="add-circle" size={size} color={color} />
-            )
-        }}
-        
-        />
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="add-circle" size={size} color={color} />
+                    )
+                }}
 
-
-
-        <Tab.Screen name="Profile" component={ProfileScreen} 
-        options={{
-            headerShown:false,
-            tabBarIcon: ({ color, size }) => (
-                <Ionicons name="people-circle" size={24} color="black" />
-            )
-        }}
-        
-        />
+            />
 
 
-    </Tab.Navigator>
-  )
+
+            <Tab.Screen name="Profile" component={ProfileScreen}
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="people-circle" size={24} color="black" />
+                    )
+                }}
+
+            />
+
+
+        </Tab.Navigator>
+    )
 }

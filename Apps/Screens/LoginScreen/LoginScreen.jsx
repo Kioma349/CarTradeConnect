@@ -6,7 +6,7 @@ import { Video, ResizeMode } from 'expo-av';
 import Colors from '../../Utils/Colors'
 import { useWarmpUpBrowser } from '../../hooks/useWarmUpBrowser';
 import { useOAuth } from '@clerk/clerk-expo';
-import {supabase} from '../../Utils/SupabaseConfig';
+import { supabase } from '../../Utils/SupabaseConfig';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -14,128 +14,128 @@ export default function LoginScreen() {
 
     useWarmpUpBrowser();
 
-        const { startOAuthFlow } = useOAuth({ strategy:"oauth_google"});
+    const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
 
-        const onPress = React.useCallback(async () => {
-            try {
-                const { createdSessionId, signIn, signUp, setActive } = 
-                
+    const onPress = React.useCallback(async () => {
+        try {
+            const { createdSessionId, signIn, signUp, setActive } =
+
                 await startOAuthFlow();
 
-                if (createdSessionId) {
-                    setActive({ session: createdSessionId});
-                    
-                    if (signUp?.emailAddress) 
-                         
-                    {
-                        const { data, error } = await supabase
-                            .from('Users')
-                            .insert([
-                                { name: signUp?.firstName + " " +  signUp?.lastName, 
-                                  email: signUp?.emailAddress,
-                                username:(signUp?.emailAddress).split('@')[0], },
-                            ])
-                            .select()
+            if (createdSessionId) {
+                setActive({ session: createdSessionId });
 
-                            if (data) {
-                                console.log("L'utilisateur est connecté pour la première fois", data);
-                            }
-                    
-                            if (error) {
-                                console.error("Erreur lors de l'inscription de l'utilisateur", error);
-                            }
+                if (signUp?.emailAddress) {
+                    const { data, error } = await supabase
+                        .from('Users')
+                        .insert([
+                            {
+                                name: signUp?.firstName + " " + signUp?.lastName,
+                                email: signUp?.emailAddress,
+                                username: (signUp?.emailAddress).split('@')[0],
+                            },
+                        ])
+                        .select()
+
+                    if (data) {
+                        console.log("L'utilisateur est connecté pour la première fois", data);
                     }
 
-                } else {
-                    // use signUp or signIn for nexr steps such as MFA
-                }    
-
-                } catch(err) {
-                    console.error("OAuth error", err);
+                    if (error) {
+                        console.error("Erreur lors de l'inscription de l'utilisateur", error);
+                    }
                 }
-            }, []);
 
-  return (
-    <View style={{flex:1, }}>
-    <Video
-    style={styles.video}
-   
-    source={{
-        uri: 'https://videos.pexels.com/video-files/20153917/20153917-uhd_2560_1440_24fps.mp4',
-    }}
-    
-    shouldPlay
-    resizeMode='cover'
-    isLooping={true}
-    />
+            } else {
+                // use signUp or signIn for nexr steps such as MFA
+            }
 
-<View style={{
-            display:'flex',
-            alignItems:'center',
-            paddingTop:100, //position des 2 texts 
-            flex:1,
-            paddingHorizontal:20,
-            backgroundColor:Colors.BACKGROUND_TRASNP,
+        } catch (err) {
+            console.error("OAuth error", err);
+        }
+    }, []);
 
-        }}>
-            <Text 
-            style={{
-                    fontFamily:'outfit-bold',
-                    color:Colors.WHITE,
-                    fontSize:35,
+    return (
+        <View style={{ flex: 1, }}>
+            <Video
+                style={styles.video}
 
-            }}
-            
-            >CarTradeConnect Login </Text>
+                source={{
+                    uri: 'https://videos.pexels.com/video-files/20153917/20153917-uhd_2560_1440_24fps.mp4',
+                }}
 
-<Text
-            style={{
-                fontFamily:'outfit',
-                color:Colors.WHITE,
-                fontSize:17,
-                textAlign:'center',
-                marginTop:15,
-            }}
-            >Best Easy Trade Car Application</Text>
+                shouldPlay
+                resizeMode='cover'
+                isLooping={true}
+            />
 
-            <TouchableOpacity 
-                onPress = {onPress} 
-            style={{
-                    display:'flex',
-                    alignItems:'center',
-                    gap:10,
-                    flexDirection:'row',
-                    backgroundColor:Colors.WHITE,
-                    padding:10,
-                    paddingHorizontal:55,
-                    borderRadius:99,
-                    position:'absolute',
-                    bottom:300
-                }}>
-            <Image source={require('./../../../assets/images/google.png')}
+            <View style={{
+                display: 'flex',
+                alignItems: 'center',
+                paddingTop: 100, //position des 2 texts 
+                flex: 1,
+                paddingHorizontal: 20,
+                backgroundColor: Colors.BACKGROUND_TRASNP,
+
+            }}>
+                <Text
                     style={{
-                        width:30,
-                        height:30
+                        fontFamily: 'outfit-bold',
+                        color: Colors.WHITE,
+                        fontSize: 35,
+
                     }}
+
+                >CarTradeConnect Login </Text>
+
+                <Text
+                    style={{
+                        fontFamily: 'outfit',
+                        color: Colors.WHITE,
+                        fontSize: 17,
+                        textAlign: 'center',
+                        marginTop: 15,
+                    }}
+                >Best Easy Trade Car Application</Text>
+
+                <TouchableOpacity
+                    onPress={onPress}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 10,
+                        flexDirection: 'row',
+                        backgroundColor: Colors.WHITE,
+                        padding: 10,
+                        paddingHorizontal: 55,
+                        borderRadius: 99,
+                        position: 'absolute',
+                        bottom: 300
+                    }}>
+                    <Image source={require('./../../../assets/images/google.png')}
+                        style={{
+                            width: 30,
+                            height: 30
+                        }}
                     />
-                 <Text style={{
-                    fontFamily:'outfit',
-                 }} >Se connecter avec google</Text>
-            </TouchableOpacity>
+                    <Text style={{
+                        fontFamily: 'outfit',
+                    }} >Se connecter avec google</Text>
+                </TouchableOpacity>
             </View>
-    </View>
-  )
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
-    video:{
+    video: {
         height: '100%',
-        width:470,
+        width: 470,
         position: 'absolute',
-        top:0,
-        left:0,
-        right:0,
-        bottom:0,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
 
     }
 })
