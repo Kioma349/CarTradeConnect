@@ -8,7 +8,7 @@ export default function VideoThumbnailItem({ video }) {
     return (
         <View style={{ flex: 1, margin: 5 }}>
             
-            <View style={{ position: 'absolute', zIndex: 10, bottom: 0, padding: 5 }}>
+            <View style={{ position: 'absolute', zIndex: 10, bottom: 0, padding: 5, display: 'flex', flexDirection:'row', justifyContent:'space-between', width:'100%' }}>
 
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5 }}>
 
@@ -25,7 +25,7 @@ export default function VideoThumbnailItem({ video }) {
                     
                 </View>
 
-                <View>
+                <View style={{display:'flex', flexDirection:'row', alignItems:'center', gap:3}}>
 
                     <Text style={{fontFamily:'outfit',
                         fontSize: 12, color:Colors.WHITE}}>36</Text>
