@@ -4,6 +4,7 @@ import { useUser } from '@clerk/clerk-expo';
 import { supabase } from '../../Utils/SupabaseConfig';
 import Colors from '../../Utils/Colors'
 
+
 import VideoThumbnailItem from './VideoThumbnailItem';
 
 export default function HomeScreen() {
