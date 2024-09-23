@@ -26,6 +26,7 @@ export default function LoginScreen() {
                     setActive({ session: createdSessionId});
                     
                     if (signUp?.emailAddress) 
+                         
                     {
                         const { data, error } = await supabase
                             .from('Users')

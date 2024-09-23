@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { useState } from 'react';
 import { s3bucket } from '../../Utils/S3BucketConfig';
+import { supabase } from '../../Utils/SupabaseConfig';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Colors from '../../Utils/Colors'
@@ -15,6 +16,7 @@ export default function PreviewScreen() {
       const navigation = useNavigation();
       const [description, setDescription] = useState();
       const [videoUrl, setVideoUrl] = useState();
+  
 
 
 
