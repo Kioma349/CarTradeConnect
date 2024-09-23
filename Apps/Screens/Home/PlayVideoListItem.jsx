@@ -1,36 +1,35 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 
-export default function PlayVideoListItem({video}) {
-    const videoRef = useRef(null);
-    const [status, setStatus] = useState({});
+export default function PlayVideoListItem({ video }) {
+  const videoRef = useRef(null);
+  const [status, setStatus] = useState({});
+
   return (
-    <View>
-      
+    <View style={styles.container}>
       <Video
         ref={videoRef}
         style={styles.video}
-        source={{
-          uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
-        }}
+        source={{ uri: video?.videoUrl }}
         useNativeControls
-        resizeMode={ResizeMode.CONTAIN}
+        resizeMode={ResizeMode.COVER}
         isLooping
-        onPlaybackStatusUpdate={status => setStatus(() => status)}
+        shouldPlay
+        onPlaybackStatusUpdate={setStatus}
       />
-
     </View>
-  )
+  );
 }
 
-
-
 const styles = StyleSheet.create({
-    video: {
-        alignSelf: 'center',
-        width: 320,
-        height: 200,
-      },
-
-})
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  video: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
+});
