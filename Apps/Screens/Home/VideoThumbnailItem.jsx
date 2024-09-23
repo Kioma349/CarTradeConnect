@@ -2,12 +2,20 @@ import { View, Text, Image } from 'react-native'
 import React from 'react'
 import Colors from '../../Utils/Colors'
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native';
+
+
 
 
 export default function VideoThumbnailItem({ video }) {
+    const navigation = useNavigation();
     return (
-        <View style={{ flex: 1, margin: 5 }}>
-
+        <TouchableOpacity style={{ flex: 1, margin: 5 }}
+        onPress={(o) => navigation.navigate('play-video', { 
+            selectedVideo:video 
+        })}>
+            <>
             <View style={{ position: 'absolute', zIndex: 10, bottom: 0, padding: 5, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
 
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5 }}>
@@ -46,11 +54,7 @@ export default function VideoThumbnailItem({ video }) {
                 style={{ width: '100%', height: 250, borderRadius: 10 }}
 
             />
-
-
-
-
-
-        </View>
+            </>
+        </TouchableOpacity>
     )
 }
