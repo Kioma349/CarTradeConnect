@@ -28,8 +28,7 @@
       "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_Z2FtZS1odXNreS02MC5jbGVyay5hY2NvdW50cy5kZXYk",
       "EXPO_PUBLIC_SUPABASE_API_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndkbnRzbmpvZ2pndGVkb2p3anh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjY1MjE2OTUsImV4cCI6MjA0MjA5NzY5NX0.3kESHP0d5Tn7TTmy_NU2CLSzaX_3ZIRlodvvRDrg0RA",
       "EXPO_PUBLIC_SUPABASE_URL": "https://wdntsnjogjgtedojwjxt.supabase.co",
-      
-
+  
     },
 
     "plugins": [

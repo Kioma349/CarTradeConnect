@@ -48,7 +48,7 @@ export default function HomeScreen() {
                     profileImage
                 )
             `)
-            .range(loadCount, loadCount + 7)
+            .range(loadCount, loadCount + 9)
             // .range(0, 7) // On récupère les 10 dernières vidéos
             .order('id', { ascending: true }); // On récupère les 10 dernières vidéos trier par l'id
         // .order('createdAt', {ascending: false}); // On récupère les 10 dernières vidéos trier par la date de création
