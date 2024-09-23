@@ -9,6 +9,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Colors from '../Utils/Colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AddScreenNavigation from '../Navigations/AddScreenNavigation';
+import HomeScreenStackNavigation from './HomeScreenStackNavigation';
 
 
 const Tab = createBottomTabNavigator();
@@ -25,7 +26,7 @@ export default function TabNavigation() {
             }}
         >
 
-            <Tab.Screen name="Home" component={HomeScreen}
+            <Tab.Screen name="Home" component={HomeScreenStackNavigation}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ color, size }) => (
