@@ -1,86 +1,87 @@
-import React, { useEffect, useState, createContext, useContext } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, Dimensions } from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { View, Text, FlatList, Dimensions, TouchableOpacity } from 'react-native'  // Assurez-vous d'importer TouchableOpacity d'ici
+import React, { useEffect, useState } from 'react'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import PlayVideoListItem from './PlayVideoListItem';
+import { Ionicons } from '@expo/vector-icons';
 import { supabase } from '../../Utils/SupabaseConfig';
-
-// Contexte pour gérer la vidéo actuellement en lecture
-export const VideoPlayContext = createContext();
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { useUser } from '@clerk/clerk-expo';
 
 export default function PlayVideoList() {
-    const { params } = useRoute();
-    const navigation = useNavigation();
-    const [videoList, setVideoList] = useState([]);
-    const [currentPlaying, setCurrentPlaying] = useState(null);
-    const windowHeight = Dimensions.get('window').height;
-    const bottomTabHeight = useBottomTabBarHeight();
+  const params = useRoute().params;
+  const [videoList, setVideoList] = useState([]);
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState();
+  const [currentVideoIndex, setCurrentVideoIndex] = useState();
+  const { user } = useUser();
+  const WindowHeight = Dimensions.get('window').height;
+  const BottomTabHeight = useBottomTabBarHeight();
 
-    useEffect(() => {
-        if (params?.selectedVideo) {
-            setVideoList([params.selectedVideo]);
-            getLatestVideoList(params.selectedVideo.id);
-        }
-    }, [params]);
+  useEffect(() => {
+    setVideoList([params.selectedVideo]);
+    GetLatestVideoList();
+  }, [])
 
-    const getLatestVideoList = async (excludeId) => {
-        const { data, error } = await supabase
-            .from('PostList')
-            .select(`
-                *,
-                Users (
-                    username, 
-                    name, 
-                    profileImage
-                )
-            `)
-            .not('id', 'eq', excludeId)
-            .order('id', { ascending: true });
-
-        if (error) {
-            console.error('Erreur lors de la récupération des vidéos:', error);
-            return;
-        }
-
-        setVideoList(prev => [...prev, ...data]);
-    };
-
-    return (
-        <VideoPlayContext.Provider value={{ currentPlaying, setCurrentPlaying }}>
-            <View>
-                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back-circle-sharp" size={54} color="black" />
-                    <Text style={styles.backText}>Retour</Text>
-                </TouchableOpacity>
-
-                <FlatList
-                    data={videoList}
-                    style={{ zIndex: -1 }}
-                    pagingEnabled
-                    onScroll={(e) => {
-                        const index = Math.round(e.nativeEvent.contentOffset.y / (windowHeight - bottomTabHeight));
-                        setCurrentPlaying(index);
-                    }}
-                    renderItem={({ item, index }) => (
-                        <PlayVideoListItem video={item} activeIndex={currentPlaying} index={index} />
-                    )}
-                    keyExtractor={item => item.id.toString()}
-                />
-            </View>
-        </VideoPlayContext.Provider>
-    );
-}
-
-const styles = StyleSheet.create({
-    backButton: {
-        position: 'absolute', 
-        zIndex: 10, 
-        padding: 20, 
-        paddingTop: 50
-    },
-    backText: {
-        fontFamily: 'outfit',
-        fontSize: 18
+  const GetLatestVideoList = async () => {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('PostList')
+      .select('*,Users(username,name,profileImage,email),VideoLikes(postIdRef,userEmail)')
+      .range(0, 7)
+      .order('id', { ascending: false })
+    const result = data.filter((item => item.id != params.selectedVideo.id))
+    setVideoList(result)
+    if (data) {
+      setLoading(false);
     }
-});
+  }
+
+  const userLikeHandler = async (videoPost, isLike) => {
+    if (!isLike) {
+      const { data, error } = await supabase
+        .from('VideoLikes')
+        .insert([{
+          postIdRef: videoPost.id,
+          userEmail: user.primaryEmailAddress.emailAddress
+        }])
+        .select();
+      console.log(error, data)
+      GetLatestVideoList();
+    }
+    else {
+      const { error } = await supabase
+        .from('VideoLikes')
+        .delete()
+        .eq('postIdRef', videoPost.id)
+        .eq('userEmail', user?.primaryEmailAddress?.emailAddress)
+      GetLatestVideoList();
+    }
+  }
+
+  return (
+    <View>
+      <TouchableOpacity style={{position: 'absolute', zIndex: 10, padding: 20, paddingTop: 50}}
+        onPress={() => navigation.goBack()}>
+        <Ionicons name="arrow-back" size={24} color="black" />
+      </TouchableOpacity>
+      
+      <FlatList
+        data={videoList}
+        style={{ zIndex: -1 }}
+        pagingEnabled
+        onScroll={e => {
+          const index = Math.round(e.nativeEvent.contentOffset.y / (WindowHeight - BottomTabHeight))
+          setCurrentVideoIndex(index)
+        }}
+        renderItem={({ item, index }) => (
+          <PlayVideoListItem video={item} key={index}
+            index={index}
+            activeIndex={currentVideoIndex}
+            userLikeHandler={userLikeHandler}
+            user={user}
+          />
+        )}
+      />
+    </View>
+  )
+}
