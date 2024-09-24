@@ -5,7 +5,6 @@ import { useFonts } from 'expo-font';
 import Constants from 'expo-constants';
 import LoginScreen from './Apps/Screens/LoginScreen/LoginScreen';
 import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-expo';
-import HomeScreen from './Apps/Screens/Home/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigation from './Apps/Navigations/TabNavigation';
 
